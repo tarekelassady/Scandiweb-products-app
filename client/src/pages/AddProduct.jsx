@@ -24,6 +24,7 @@ const AddProduct = () => {
   const [getDescription,setDescription]=useState("");
   const [getMessage,setMessage]=useState("");
   const [getError, setError]=useState(false);
+  const [getIsVisible, setIsVisible]=useState(false);
   const [getTip,setTip]=useState();
   const navigate=useNavigate();
 
@@ -57,6 +58,7 @@ const AddProduct = () => {
     <br />xxx: Sub Type "001, 002 ...etc"<br />xxx: Serial "001, 002 ...etc"</div>)
   }
   const handleClick=async(e)=>{
+      setIsVisible(true);
       e.preventDefault();
       if(!getSKU||!getName||!getPrice||!getType){
         setError(true);
@@ -110,6 +112,7 @@ const AddProduct = () => {
     }catch(err){
       console.log(err);
     }
+    
   }
   
   
@@ -117,14 +120,15 @@ const AddProduct = () => {
     <div className="product-add">
       <div className="product-add-header">
         <h1>Product Add</h1>
-        <div className='action-buttons'>
+        
         <div className="action-buttons">
           <button onClick={handleClick}>Save</button>
           <Link to="/"><button>Cancel</button></Link>
         </div>
-        </div>
       </div>
+      
       <hr />
+      {getIsVisible&&<p className={getError?"error-message":"sent-message"} style={{padding:"10px", textAlign:"center"}}>{getMessage}</p>}
       <form id="product_form">
       
         <div className='main-data'>
@@ -147,8 +151,9 @@ const AddProduct = () => {
           <select name="" id="productType" defaultValue="type" onChange={(handleComponentsChange)}>
             <option value="type" disabled >Type</option>
             <option id="DVD" value="DVD">DVD</option>
-            <option id="Furniture" value='Book'>Book</option>
-            <option id="Book" value='Furniture'>Furniture</option>
+            <option id="Book" value="Book">Book</option>
+            <option id="Furniture" value="Furniture">Furniture</option>
+            
           </select>
           {getTypeComponent}
         </div>
@@ -158,7 +163,7 @@ const AddProduct = () => {
           <textarea id="description" cols="30" rows="10" onChange={e=>setDescription(e.target.value)}></textarea>
         </div>
         
-        <p className={getError?"error-message":"sent-message"} style={{padding:"10px", textAlign:"center"}}>{getMessage}</p>
+        
 
       </form>
     </div>
