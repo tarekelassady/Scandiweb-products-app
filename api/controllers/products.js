@@ -35,7 +35,6 @@ router.get("/",async(req,res)=>{
 
 //Get (Reed) single product by SKU
 router.get("/:sku",async(req,res)=>{
-    // const [product]=await db.query("SELECT * FROM tblproducts WHERE sku=?", [req.params.sku] ) //OR
     const [product]=await db.query("SELECT * FROM tblproducts WHERE sku='" + req.params.sku + "'" )
     .catch(err=>console.log(err));
     return res.send(product);
